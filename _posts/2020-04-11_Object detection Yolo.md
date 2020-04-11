@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Yolo系列"
+title: "Yolo"
 date: 2020-04-11
 excerpt: "One-stage detect, Yolo v1/v2/v3."
 tags: [detect, yolo, yolov1, yolov2, yolov3]
