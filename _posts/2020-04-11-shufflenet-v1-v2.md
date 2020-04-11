@@ -19,7 +19,7 @@ code: [https://github.com/farmingyard/ShuffleNet](https://github.com/farmingyard
 1. 文章提出之时，很多网络结构，如Xception/ResNeXt等，由于大量的1\*1运算，使得在网络结构很小时并不高效；对此，作者用pointwise conv替代1\*1卷积，即用group conv将1\*1卷积拆分
     * 虽然ResNeXt中有cardinality维度，将channel分割成不同的组，但是并没有对一个ResNeXt模块内的所有层都执行分组，如ResNeXt中只对3\*3的卷积部分增加cardinality，则再传到下一层的话，就需要大量的add操作
     * 由此可知，一个shuffle unit中的所有层都将进行分组，如下图
-        * ![Shuffle Unit](./attachments/lite1_shufflenet_v1_channel_shuffle.png)
+        * ![Shuffle Unit](../assets/attachments/netlite/lite1_shufflenet_v1_channel_shuffle.png)
 2. 由于group conv使得前后层的特征只会在相同的group之间传递，没法相互促进；对此，作者提出Channel Shuffle操作
 
 ### Details
@@ -46,12 +46,12 @@ code: [https://github.com/farmingyard/ShuffleNet](https://github.com/farmingyard
 
 2. 一个具体的ShuffleUnit结构？
     * 一个ShuffleUnit由1\*1的gconv，加上3\*3的DWconv，最后再加上一个1\*1的gconv组成，如下图
-        * ![ShuffleNet Unit](./attachments/lite1_shufflenet_v1_shuffle_unit.png)
+        * ![ShuffleNet Unit](../assets/attachments/netlite/lite1_shufflenet_v1_shuffle_unit.png)
     * 图中C提供了一个改进版本的，增加了stride，同时也可以使得输出的channel个数增加不少
 
 3. 一个ShuffleNet的整体结构？
     * 整体的ShuffleNet结构就是上述的ShuffleNet的堆砌，如下图：
-        * ![ShuffleNet Architecture](./attachments/lite1_shufflenet_v1_shuffle_architecture.png)
+        * ![ShuffleNet Architecture](../assets/attachments/netlite/lite1_shufflenet_v1_shuffle_architecture.png)
 
 
 ## ShuffleNet V2
@@ -72,9 +72,9 @@ paper: [Shufflenet V2: Practical guidelines for efficient cnn architecture desig
     * reduce element-wise operation: 尽管element-wise的参数量比较小，但是MAX同样比较大
 
 2. V2的一个ShuffleUnit结构
-    * ![ShuffleNet V2 ShuffleUnit](./attachments/lite1_shufflenet_v2_block.png)
+    * ![ShuffleNet V2 ShuffleUnit](../assets/attachments/netlite/lite1_shufflenet_v2_block.png)
     * 对比图中的c，最基础的V2是先把channel split，一部分直接按照residual的方式identity map到下一阶段，另一部分执行类似与V1的操作，只不过不再在内部进行channel shuffle的操作，同时1\*1的gconv也改回conv了，且在DWConv后移除了ReLU操作
     * 图d，则是stride=2的情况。注意，这里在模块的开始处，没有进行channel split，这样能保证在下一届阶段channel的个数是double了
 
 3. V2的整体网络结构
-    * ![ShuffleNet V2 ShuffleUnit](./attachments/lite1_shufflenet_v2_shuffle_architecture.png)
+    * ![ShuffleNet V2 ShuffleUnit](../assets/attachments/netlite/lite1_shufflenet_v2_shuffle_architecture.png)
