@@ -3,7 +3,12 @@ layout: post
 title: "Yolo"
 date: 2020-04-11
 excerpt: "One-stage detect, Yolo v1/v2/v3."
-tags: [detect, yolo, yolov1, yolov2, yolov3]
+tags: 
+- detect
+- yolo
+- yolov1
+- yolov2
+- yolov3
 comments: true
 ---
 
@@ -15,7 +20,8 @@ slide：[官方slide介绍，很详细](https://docs.google.com/presentation/d/1
 ### Abstract
 1. 如文章名字所述，其完成一次目标检测，只需要look once，也就是不像两阶段的网络那样，也不像SSD那样，需要提前生成anchor bbox/default bbox
 2. 网络计算特别快，主要是因为需要搜索的目标框的个数不多，如文中所述，对于7x7的cell，每个cell预测2个bbox，最终的总共框的个数也就98个，相对于SSD或Faster RCNN这些，少了很多。网络的模型如下图：
-    * ![The Net Model](./det_attachments/det5_yolo_v1_net_model.png)
+    * ![The Net Model](../assets/attachments/det/det5_yolo_v1_net_model.png)
+
 
 ### Details
 1. 原理
@@ -31,12 +37,12 @@ slide：[官方slide介绍，很详细](https://docs.google.com/presentation/d/1
     * 同时，w和h是开方之后计算的，以消除大尺寸框和小尺寸框的差异；如果不开方，则loss会趋向于拟合大尺寸的框
     * 对于回归的loss，只有该bbox属于该gt时才会计算（见loss函数的前两项）
     * 对于分类的loss，只有该cell存在bbox时才会计算（见loss函数的最后一项），同时该loss是IoU和条件概率P的乘积，且不会在B个bbox上叠加，因为一个cell只预测一组置信度得分
-    * ![./The loss](./det_attachments/det5_yolo_v1_loss.png)
+    * ![The Loss](../assets/attachments/det/det5_yolo_v1_loss.png)
 
 3. 如何准备数据标签？如何训练？
     * 训练数据是VOC的数据格式，只是在计算loss时会做编码处理
     * 网络结构如下图
-        * ![./The architecture](./det_attachments/det5_yolo_v1_net_architecture.png)
+        * ![The architecture]({{ site.url }}/assets/attachments/det/det5_yolo_v1_net_architecture.png)
     * 训练时原模型是ImageNet是预训练，然后增加多个`1x1`的卷积层，并将尺寸扩大到`448x448`
 
 4. 测试时的网络输出是什么？
