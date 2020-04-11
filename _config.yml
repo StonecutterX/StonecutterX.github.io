@@ -37,30 +37,16 @@ disqus_shortname:   stonecutter
   #ad-client:
   #ad-slot:
 #bing-verify:
-#email:
-twitter:            username
-facebook:           username
-github-url:         username
-#stackoverflow:     123456/username   from a "http://stackoverflow.com/users/123456/username" link
-#linkedin:          username
-#xing:              username
-instagram:          username
-#lastfm:            username
-#tumblr:            username
-#medium:            '@username'
-#pinterest:         username
-#foursquare:        username
-steam:              username
-#dribbble:          username
-#youtube:           username
-#youtube-channel:   channel
-#soundcloud:        username
-#weibo:             username
-#flickr:            username
-#codepen:           username
-#keybase:           username
-#xmpp:              username@server.com
-#hackernews:        username
+# email:
+# twitter:            username
+# facebook:           username
+github-url:           StonecutterX
+# stackoverflow:      123456/username   from a "http://stackoverflow.com/users/123456/username" link
+# linkedin:           username
+# instagram:          username
+# medium:            '@username'
+# weibo:             username
+
 
 # Gems
 gems:
