@@ -109,16 +109,17 @@ paper: [YOLO9000: Better, faster, stronger](https://arxiv.org/abs/1612.08242)
             [9.77052, 9.16828].
             ```
         * 在聚类时，没有使用传统的欧氏距离loss，而是用的IoU loss
-    * *预测的过程*：假设网络输出的预测结果是$(t_x, t_y, t_w, t_h, t_o)$, 每个cell相对于图像左上角的距离为$(c_x, c_y)$，anchor box(paper中的prior box)的宽高为$p_w, p_h$，则实际对应的结果为：
-        \\[ d_x = \sigma(t_x) + c_x,
-            d_y = \sigma(t_y) + c_y,
-            d_w = p{_w}e^{t_w}
-            d_h = p{_h}e^{t_h}
-            P(object) * IoU(b, object) = t_o \\]
-        * 其中，$\sigma$代表sigmoid函数，为了将某些结果压缩到0到1之间
-        * 预测框的中心点$d_x, d_y$，压缩到0到1之间，加上对应的cell的中心点，宽和高$d_w, d_y$，其中e相当于缩放因子再乘以anchor的宽高
+    * *预测的过程*：假设网络输出的预测结果是\\( (t_x, t_y, t_w, t_h, t_o) \\), 每个cell相对于图像左上角的距离为\\( (c_x, c_y) \\)，anchor box(paper中的prior box)的宽高为\\( p_w, p_h \\)，则实际对应的结果为：
+            \\[ d_x = \sigma(t_x) + c_x \\]
+            \\[ d_y = \sigma(t_y) + c_y, \\]
+            \\[ d_w = p{_w}e^{t_w}, \\]
+            \\[ d_h = p{_h}e^{t_h}, \\]
+            \\[ P(object) * IoU(b, object) = t_o \\]
+            
+        * 其中，\\( \sigma \\)代表sigmoid函数，为了将某些结果压缩到0到1之间
+        * 预测框的中心点\\( d_x, d_y \\)，压缩到0到1之间，加上对应的cell的中心点，宽和高\\( d_w, d_y \\)，其中e相当于缩放因子再乘以anchor的宽高
         * 除此之外，box的置信度和box的类别概率也是在0到1之间
-        * 得到的$d_x, d_y, d_w, d_h$是相对于cell的，因此还需要再乘以缩放倍数32，才能得到在原图上的目标的框
+        * 得到的\\( d_x, d_y, d_w, d_h \\)是相对于cell的，因此还需要再乘以缩放倍数32，才能得到在原图上的目标的框
     * 如作者文中所述，引入anchor，yolov2的mAP从69.5降低到了69.2，但是recall从81%提升到了88%
             
 7. Loss
