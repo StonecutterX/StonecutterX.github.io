@@ -1,3 +1,16 @@
+---
+layout: post
+title: "EfficientDet"
+date: 2020-04-11
+excerpt: "Detect, EfficientDet: Scalable and Efficient Object Detection."
+tags: 
+- detect
+- BiFPN
+- NAS
+comments: true
+---
+
+
 paper: [EfficientDet: Scalable and Efficient Object Detection](https://arxiv.org/abs/1911.09070)
 
 code
@@ -20,7 +33,7 @@ code
     * 相较于FPN的方式，BiFPN则是增加了双向选择的方式，如下图：
         * ![BiFPN](../assets/attachments/det/det6_EfficientDet_BiFPN.png)
         * 即，对于P6层最终的输出特征，有三部分构成：最原始的P6层特征（通过1x1的conv），P6层（1x1的conv）和P7层upsample后的特征融合的特征，P5层的最终的输出的特征（downsample），这里用的conv和padding都是same padding的方式，参考PyTorch中的代码实现如下
-            ```Python
+            ~~~Python
             p6_w1 = self.p6_w1_relu(self.p6_w1)
             weight = p6_w1 / (torch.sum(p6_w1, dim=0) + self.epsilon)
             # Connections for P6_0 and P7_0 to P6_1 respectively
@@ -32,12 +45,12 @@ code
             # Connections for P6_0, P6_1 and P5_2 to P6_2 respectively
             p6_out = self.conv6_down(
             self.swish(weight[0] * p6_in + weight[1] * p6_up + weight[2] * self.p6_downsample(p5_out)))
-            ```
+            ~~~
         * 用于特征融合的conv，如上面的`conv6_up`均是采用depthwise conv实现的
 
 2. fusion的实现方式
     * 作者在文中给出了三种融合方式的介绍，这里只介绍最快速有效的fast normalized fusion的方式，公式如下：
-        \\[ O = \sum_{i} \frac{e^{w_i}{\epsilon + \sum_{j} {w_j}} \\]
+        \\[ O = \sum_{i} \frac{e^{w_i}}{\epsilon + \sum_{j} {w_j}} \\]
     * 这个里面没有任何的softmax操作，相对更快速，如上面的代码所示
     * 其中的swish激活函数是\\( f = x \times sigmoid(x) \\)
 
