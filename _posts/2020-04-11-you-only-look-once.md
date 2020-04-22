@@ -43,7 +43,7 @@ slide：[官方slide介绍，很详细](https://docs.google.com/presentation/d/1
     * 训练数据是VOC的数据格式，只是在计算loss时会做编码处理
     * 网络结构如下图
         * ![The architecture]({{ site.url }}/assets/attachments/det/det5_yolo_v1_net_architecture.png)
-    * 训练时原模型是ImageNet是预训练，然后增加多个`1x1`的卷积层，并将尺寸扩大到`448x448`
+    * 模型的backbone是GoogLeNet，首先用`224x224`的尺寸在ImageNet上预训练，然后对于detection任务，double输入的分辨率，增加4个conv，2个fc，再进行finetuing
 
 4. 测试时的网络输出是什么？
     * 每张图输出98个bbox，网络的最后两层是FC，然后reshape到`7x7x30`，依次存储的是每个cell的[x,y,w,h,c]，最后的20位是分类的概率信息
