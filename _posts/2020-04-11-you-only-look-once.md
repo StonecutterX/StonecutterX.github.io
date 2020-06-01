@@ -95,7 +95,7 @@ paper: [YOLO9000: Better, faster, stronger](https://arxiv.org/abs/1612.08242)
     * 不同于Faster Rcnn中对anchor box的使用方式，yolo v2依旧使用v1中对框的预测方式，将类型预测和位置回归解耦合，而不是对每个anchor box去预测其对应的的class和bbox
 6. YoloV2中的anchor box
     * 如v1，v2将fm分成`MxM`的cell，每个cell也预测B个bbox（v2中是`13x13`的cell，每个cell预测5个不同aspect ratio的bbox）
-    * 每个bbox包含4个坐标值（xywh，xy是相对于每个cell的，wh是相对于anchor box的w和h，也就是作者说的**Directly location prediction**），1个confidence score（该cell包含物体的概率），20个类别得分。而一个cell预测5个bbox，因此输出维度为125
+    * 每个bbox包含4个坐标值（xywh，xy是相对于每个cell的，wh是相对于anchor box的w和h，也就是作者说的**Directly location prediction**），1个confidence score（该cell包含物体的概率），20个类别得分。而一个cell预测5个bbox，因此输出维度为\\((4+1+20) \times 5 \\) = 125.
     * anchor如何打标签的呢？
         * 得到物体的bbox的中心点，将这个中心点所落在的cell中的5个anchor box，与这个物体的bbox计算IoU，最大的anchor用于预测该物体（v1中每个cell只预测一组类别得分，即每个cell只负责预测一个物体）
     * **anchor的选择**
